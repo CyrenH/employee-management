@@ -1,3 +1,19 @@
 spring:
   application:
     name: employeemanagement
+  servlet:
+    multipart:
+      max-file-size: 2MB        # per uploaded file
+      max-request-size: 3MB     # whole request (photo + JSON part)
+
+server:
+  port: 8080
+  error:
+    include-stacktrace: never
+    include-message: never
+    include-binding-errors: never
+
+logging:
+  level:
+    root: INFO
+    io.github.cyrenh.employeemanagement: DEBUG
