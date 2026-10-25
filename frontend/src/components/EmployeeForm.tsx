@@ -11,6 +11,10 @@ import { validatePhoto } from "../utils/photo";
 import { employeeValidators } from "../validation/employeeValidation";
 import PhotoPicker from "./PhotoPicker";
 
+interface EmployeeFormProps {
+    onCreated: () => void;
+}
+
 const INITIAL_VALUES: EmployeeFormValues = {
     name: "",
     department: null,
@@ -20,7 +24,7 @@ const INITIAL_VALUES: EmployeeFormValues = {
     address: "",
 };
 
-const EmployeeForm = () => {
+const EmployeeForm = ({ onCreated }: EmployeeFormProps) => {
     const form = useForm<EmployeeFormValues>({
         mode: "uncontrolled", // avoids re-rendering the whole form on every keystroke
         initialValues: INITIAL_VALUES,
@@ -77,6 +81,7 @@ const EmployeeForm = () => {
         try {
             await employeeApi.create({ ...values, department: values.department }, photo);
             handleClear();
+            onCreated(); // the create page navigates back to the list
             notifications.show({ color: "green", title: "Employee created", message: "The employee was saved." });
         } catch (error) {
             applyServerError(error);
@@ -95,7 +100,16 @@ const EmployeeForm = () => {
             {/* noValidate: show our messages instead of the browser's built-in ones */}
             <form onSubmit={form.onSubmit(handleSubmit)} noValidate>
                 {/* A disabled fieldset disables every field inside it while the request is in flight */}
-                <Fieldset legend="Create employee" disabled={submitting}>
+                <Fieldset
+                    legend="Create Employee"
+                    disabled={submitting}
+                    styles={{
+                        legend: {
+                            fontSize: 'var(--mantine-h4-font-size)',
+                            fontWeight: 700,
+                        },
+                    }}
+                >
                     <Stack gap="md">
                         {formError && <Alert color="red">{formError}</Alert>}
 
@@ -113,7 +127,7 @@ const EmployeeForm = () => {
                             key={form.key("active")} {...form.getInputProps("active", { type: "checkbox" })}
                         />
                         <TextInput
-                            label="Number" type="tel" placeholder="+60 12-345 6789" withAsterisk
+                            label="Phone Number" type="tel" placeholder="+60 12-345 6789" withAsterisk
                             key={form.key("number")} {...form.getInputProps("number")}
                         />
                         <TextInput

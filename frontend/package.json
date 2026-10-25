@@ -16,7 +16,8 @@
     "@mantine/notifications": "^9.7.3",
     "apisauce": "^3.2.2",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "react-router": "^7.18.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

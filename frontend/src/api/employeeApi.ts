@@ -1,5 +1,5 @@
 import type { Employee, EmployeeRequest } from "../types/employee";
-import { apiClient } from "./client";
+import {API_BASE_URL, apiClient} from "./client";
 import { ApiError, toApiError, type ProblemBody } from "./apiError";
 
 // Overrides apisauce's JSON default, which would turn FormData into a JSON body.
@@ -23,6 +23,19 @@ class EmployeeApi {
         if (!data) throw new ApiError(response.status ?? 0, "Unexpected empty response from the server.");
         return data;
     };
+
+    findAll = async (): Promise<Employee[]> => {
+        const response = await apiClient.get<Employee[], ProblemBody>(this.baseUrl);
+        if (!response.ok) throw toApiError(response);
+
+        const { data } = response;
+        if (!data) throw new ApiError(response.status ?? 0, "Unexpected empty response from the server.");
+        return data;
+    };
+
+    // Only call for employees with hasPhoto = true; the endpoint returns 404 otherwise
+    photoUrl = (id: string): string => `${API_BASE_URL}${this.baseUrl}/${id}/photo`;
+
 }
 
 export const employeeApi = new EmployeeApi();
