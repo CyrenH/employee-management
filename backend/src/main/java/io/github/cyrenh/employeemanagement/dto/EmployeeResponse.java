@@ -12,5 +12,5 @@ public record EmployeeResponse(
         String number,
         String email,
         String address,
-        boolean hasPhoto
+        String photoVersion // null when there is no photo; changes whenever the photo changes
 ) { }

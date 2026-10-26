@@ -25,7 +25,7 @@ const EmployeeList = ({ employees, loading, error, onRetry, onView }: EmployeeLi
         <Stack gap="md">
             <Group justify="space-between">
                 <Group gap="xs">
-                    <Title order={2} size="h3">Employees</Title>
+                    <Title order={1} size="h3">Employees</Title>
                     <Badge variant="light" size="lg">{employees.length}</Badge>
                 </Group>
                 <Button component={Link} to="/employees/new">Add Employee</Button>

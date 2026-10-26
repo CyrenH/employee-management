@@ -12,4 +12,6 @@ public interface EmployeeService {
     EmployeeResponse create(EmployeeRequest request, MultipartFile photo);
     List<EmployeeResponse> findAll();
     PhotoResponse getPhoto(UUID id);
+    EmployeeResponse findById(UUID id);
+    EmployeeResponse update(UUID id, EmployeeRequest request, MultipartFile photo, boolean removePhoto);
 }

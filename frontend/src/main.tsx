@@ -5,7 +5,7 @@ import { Notifications } from "@mantine/notifications";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import App from "./App";
-import {BrowserRouter} from "react-router";
+import { BrowserRouter } from "react-router";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>

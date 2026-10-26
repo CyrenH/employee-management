@@ -30,5 +30,5 @@ export interface EmployeeFormValues extends Omit<EmployeeRequest, "department"> 
 
 export interface Employee extends EmployeeRequest {
     id: string;
-    hasPhoto: boolean;
+    photoVersion: string | null; // null when there is no photo; changes whenever the photo changes
 }

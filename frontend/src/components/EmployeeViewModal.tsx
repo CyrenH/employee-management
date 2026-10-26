@@ -1,6 +1,7 @@
-import { Avatar, Badge, Group, Modal, Stack, Text, Title } from "@mantine/core";
+import { Avatar, Badge, Button, Group, Modal, Stack, Text, Title } from "@mantine/core";
 import { employeeApi } from "../api/employeeApi";
 import { DEPARTMENT_LABELS, type Employee } from "../types/employee";
+import { Link } from "react-router";
 
 interface EmployeeViewModalProps {
     employee: Employee | null;
@@ -39,7 +40,7 @@ const EmployeeViewModal = ({ employee, opened, onClose }: EmployeeViewModalProps
                 <Group wrap="nowrap" align="flex-start">
                     {/* Only request the photo when one exists; otherwise the avatar shows the initials */}
                     <Avatar
-                        src={employee.hasPhoto ? employeeApi.photoUrl(employee.id) : null}
+                        src={employeeApi.photoUrl(employee)}
                         name={employee.name}
                         color="initials"
                         alt={`Photo of ${employee.name}`}
@@ -60,6 +61,11 @@ const EmployeeViewModal = ({ employee, opened, onClose }: EmployeeViewModalProps
                 <DetailRow label="Phone Number" value={employee.number} />
                 <DetailRow label="Email" value={employee.email} />
                 <DetailRow label="Address" value={employee.address} />
+
+                {/* Navigating unmounts the list page, which closes the modal */}
+                <Group justify="flex-end">
+                    <Button component={Link} to={`/employees/${employee.id}/edit`}>Edit</Button>
+                </Group>
             </Stack>
         )}
     </Modal>

@@ -11,7 +11,7 @@ import java.util.UUID;
  * copy and replace the stored one instead of mutating it.
  */
 @Getter
-@Builder
+@Builder(toBuilder = true)
 public class Employee {
     private final UUID id;
     private final String name;
@@ -20,6 +20,5 @@ public class Employee {
     private final String number;
     private final String email;
     private final String address;
-    private final byte[] photo;
-    private final String photoContentType;
+    private final Photo photo; // null when the employee has no photo
 }

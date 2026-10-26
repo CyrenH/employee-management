@@ -1,5 +1,5 @@
-import {Anchor, AppShell, Container, Group} from "@mantine/core";
-import {Link, Outlet} from "react-router";
+import { Anchor, AppShell, Container, Group } from "@mantine/core";
+import { Link, Outlet } from "react-router";
 
 const AppLayout = () => {
 

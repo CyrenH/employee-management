@@ -1,8 +1,9 @@
-import {Navigate, Route, Routes} from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import AppLayout from "./components/AppLayout";
 import EmployeeListPage from "./pages/EmployeeListPage";
 import EmployeeCreatePage from "./pages/EmployeeCreatePage";
 import NotFoundPage from "./pages/NotFoundPage";
+import EmployeeEditPage from "./pages/EmployeeEditPage";
 
 const App = () => (
     <Routes>
@@ -10,6 +11,7 @@ const App = () => (
             <Route index element={<Navigate to="/employees" replace />} />
             <Route path="employees" element={<EmployeeListPage />} />
             <Route path="employees/new" element={<EmployeeCreatePage />} />
+            <Route path="employees/:id/edit" element={<EmployeeEditPage />} />
             <Route path="*" element={<NotFoundPage />} />
         </Route>
     </Routes>

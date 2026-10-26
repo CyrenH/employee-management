@@ -1,6 +1,7 @@
 import { Avatar, Badge, Button, Card, Group, Stack, Text } from "@mantine/core";
 import { employeeApi } from "../api/employeeApi";
 import { DEPARTMENT_LABELS, type Employee } from "../types/employee";
+import { Link } from "react-router";
 
 interface EmployeeCardProps {
     employee: Employee;
@@ -16,7 +17,7 @@ const EmployeeCard = ({ employee, onView }: EmployeeCardProps) => {
                 <Group wrap="nowrap" align="flex-start">
                     {/* Only request the photo when one exists; otherwise the avatar shows the initials */}
                     <Avatar
-                        src={employee.hasPhoto ? employeeApi.photoUrl(employee.id) : null}
+                        src={employeeApi.photoUrl(employee)}
                         name={employee.name}
                         color="initials"
                         alt={`Photo of ${employee.name}`}
@@ -35,6 +36,15 @@ const EmployeeCard = ({ employee, onView }: EmployeeCardProps) => {
                 </Group>
 
                 <Group justify="flex-end">
+                    <Button
+                        component={Link}
+                        to={`/employees/${employee.id}/edit`}
+                        size="xs"
+                        variant="default"
+                        aria-label={`Edit ${employee.name}`}
+                    >
+                        Edit
+                    </Button>
                     <Button size="xs" variant="light" onClick={handleView} aria-label={`View ${employee.name}`}>
                         View
                     </Button>

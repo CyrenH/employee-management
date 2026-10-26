@@ -39,4 +39,10 @@ public class InMemoryEmployeeRepository implements EmployeeRepository {
         return Optional.ofNullable(store.get(id));
     }
 
+    @Override
+    public boolean existsByEmailAndIdNot(String email, UUID id) {
+        return store.values().stream()
+                .anyMatch(e -> !e.getId().equals(id) && e.getEmail().equalsIgnoreCase(email));
+    }
+
 }

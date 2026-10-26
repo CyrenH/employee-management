@@ -11,4 +11,5 @@ public interface EmployeeRepository {
     boolean existsByEmail(String email);
     List<Employee> findAll();
     Optional<Employee> findById(UUID id);
+    boolean existsByEmailAndIdNot(String email, UUID id);
 }

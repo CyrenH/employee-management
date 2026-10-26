@@ -4,12 +4,13 @@ import { ALLOWED_PHOTO_TYPES } from "../utils/photo";
 
 interface PhotoPickerProps {
     file: File | null;
+    existingUrl: string | null; // the saved photo (edit mode); null when there is none or it was removed
     error: string | null;
     onSelect: (file: File) => void;
     onRemove: () => void;
 }
 
-const PhotoPicker = ({ file, error, onSelect, onRemove }: PhotoPickerProps) => {
+const PhotoPicker = ({ file, existingUrl, error, onSelect, onRemove }: PhotoPickerProps) => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const resetRef = useRef<() => void>(null);
 
@@ -29,18 +30,22 @@ const PhotoPicker = ({ file, error, onSelect, onRemove }: PhotoPickerProps) => {
         if (selected) onSelect(selected);
     };
 
+    // A newly chosen file takes priority over the saved photo
+    const src = file ? previewUrl : existingUrl;
+    const hasPhoto = file !== null || existingUrl !== null;
+
     return (
         <Input.Wrapper label="Photo" description="Optional. JPEG, PNG or WebP, up to 2 MB." error={error}>
             <Group mt="xs" align="center">
-                {previewUrl && <Image src={previewUrl} alt="Photo preview" w={96} h={96} radius="md" fit="cover" />}
+                {src && <Image src={src} alt="Photo preview" w={96} h={96} radius="md" fit="cover" />}
                 <FileButton resetRef={resetRef} onChange={handleChange} accept={ALLOWED_PHOTO_TYPES.join(",")}>
                     {(props) => (
                         <Button {...props} variant="default">
-                            {file ? "Change photo" : "Choose photo"}
+                            {hasPhoto ? "Change photo" : "Choose photo"}
                         </Button>
                     )}
                 </FileButton>
-                {file && (
+                {hasPhoto && (
                     <Button variant="subtle" color="red" onClick={onRemove}>
                         Remove
                     </Button>

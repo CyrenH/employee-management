@@ -45,11 +45,24 @@ public class EmployeeController {
                 .contentType(MediaType.parseMediaType(photo.contentType()))
                 // Stops browsers from guessing a different, executable type
                 .header("X-Content-Type-Options", "nosniff")
-                // A photo can be replaced later, so make the browser revalidate instead of reusing a stale copy
+                // The browser revalidates, and the stored fingerprint lets the server answer 304 for unchanged photos
                 .cacheControl(CacheControl.noCache())
-                // Fingerprint of the image: unchanged photos get a 304 with no body, replaced ones get the new image
-                .eTag(DigestUtils.md5DigestAsHex(photo.bytes()))
+                .eTag(photo.version())
                 .body(photo.bytes());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EmployeeResponse> get(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @PutMapping(path = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<EmployeeResponse> update(
+            @PathVariable UUID id,
+            @Valid @RequestPart("employee") EmployeeRequest request,
+            @RequestPart(value = "photo", required = false) MultipartFile photo,
+            @RequestParam(value = "removePhoto", defaultValue = "false") boolean removePhoto) {
+        return ResponseEntity.ok(service.update(id, request, photo, removePhoto));
     }
 
 }
