@@ -1,6 +1,7 @@
 import type { Department } from "../types/employee";
 
-const PHONE_PATTERN = /^\+?[0-9\s-]{7,15}$/;
+// 7 to 15 digits in total (E.164 maximum), with an optional leading + and spaces or hyphens as separators
+const PHONE_PATTERN = /^\+?(?=(?:\D*\d){7,15}\D*$)[0-9\s-]+$/;
 const EMAIL_PATTERN = /^\S+@\S+$/; // light check; the server applies the full email validation
 
 export const employeeValidators = {

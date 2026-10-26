@@ -15,7 +15,7 @@ public record EmployeeRequest(
         boolean active,
 
         @NotBlank(message = "Number is required")
-        @Pattern(regexp = "^\\+?[0-9\\s-]{7,15}$", message = "Enter a valid phone number")
+        @Pattern(regexp = "^\\+?(?=(?:\\D*\\d){7,15}\\D*$)[0-9\\s-]+$", message = "Enter a valid phone number")
         String number,
 
         @NotBlank(message = "Email is required")
