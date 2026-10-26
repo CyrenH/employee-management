@@ -7,9 +7,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface EmployeeRepository {
-    Employee save(Employee employee);
+    void save(Employee employee);
     boolean existsByEmail(String email);
     List<Employee> findAll();
     Optional<Employee> findById(UUID id);
     boolean existsByEmailAndIdNot(String email, UUID id);
+    boolean deleteById(UUID id);
 }

@@ -6,10 +6,13 @@ import { Link } from "react-router";
 interface EmployeeCardProps {
     employee: Employee;
     onView: (employee: Employee) => void;
+    onDelete: (employee: Employee) => void;
 }
 
-const EmployeeCard = ({ employee, onView }: EmployeeCardProps) => {
+const EmployeeCard = ({ employee, onView, onDelete }: EmployeeCardProps) => {
+
     const handleView = () => onView(employee);
+    const handleDelete = () => onDelete(employee);
 
     return (
         <Card withBorder radius="md" padding="md">
@@ -47,6 +50,15 @@ const EmployeeCard = ({ employee, onView }: EmployeeCardProps) => {
                     </Button>
                     <Button size="xs" variant="light" onClick={handleView} aria-label={`View ${employee.name}`}>
                         View
+                    </Button>
+                    <Button
+                        size="xs"
+                        variant="light"
+                        color="red"
+                        onClick={handleDelete}
+                        aria-label={`Delete ${employee.name}`}
+                    >
+                        Delete
                     </Button>
                 </Group>
             </Stack>

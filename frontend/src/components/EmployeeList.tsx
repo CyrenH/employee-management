@@ -9,9 +9,10 @@ interface EmployeeListProps {
     error: string | null;
     onRetry: () => void;
     onView: (employee: Employee) => void;
+    onDelete: (employee: Employee) => void;
 }
 
-const EmployeeList = ({ employees, loading, error, onRetry, onView }: EmployeeListProps) => {
+const EmployeeList = ({ employees, loading, error, onRetry, onView, onDelete }: EmployeeListProps) => {
     // A full spinner only before the first data arrives; later refreshes keep the list visible
     if (loading && employees.length === 0) {
         return (
@@ -48,7 +49,7 @@ const EmployeeList = ({ employees, loading, error, onRetry, onView }: EmployeeLi
 
             <SimpleGrid cols={{ base: 1, sm: 2 }}>
                 {employees.map((employee) => (
-                    <EmployeeCard key={employee.id} employee={employee} onView={onView}/>
+                    <EmployeeCard key={employee.id} employee={employee} onView={onView} onDelete={onDelete} />
                 ))}
             </SimpleGrid>
         </Stack>

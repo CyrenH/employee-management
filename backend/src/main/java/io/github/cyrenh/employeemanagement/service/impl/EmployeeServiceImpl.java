@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository repository;
     private final EmployeeMapper mapper;
 
-    // Makes "check email, then save" atomic; the repository alone can't guarantee that
+    // Serializes all writes, so "check email, then save" is atomic and a delete can't race an update
     private final Object writeLock = new Object();
 
     @Override
@@ -122,6 +122,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         byte[] bytes = readBytes(photo);
         // The version is a fingerprint of the image, computed once here instead of on every request
         return new Photo(bytes, ImageValidator.detectContentType(bytes), DigestUtils.md5DigestAsHex(bytes));
+    }
+
+    @Override
+    public void delete(UUID id) {
+        // Same lock as create and update, so an in-flight update can't write a deleted employee back
+        synchronized (writeLock) {
+            if (!repository.deleteById(id)) {
+                throw new NotFoundException("Employee not found");
+            }
+        }
+        log.debug("Deleted employee {}", id);
     }
 
 }

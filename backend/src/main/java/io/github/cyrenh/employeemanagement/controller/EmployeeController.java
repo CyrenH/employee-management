@@ -10,7 +10,6 @@ import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,6 +62,12 @@ public class EmployeeController {
             @RequestPart(value = "photo", required = false) MultipartFile photo,
             @RequestParam(value = "removePhoto", defaultValue = "false") boolean removePhoto) {
         return ResponseEntity.ok(service.update(id, request, photo, removePhoto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -7,7 +7,7 @@ const AppLayout = () => {
         <AppShell header={{ height: 60 }} padding="md">
             <AppShell.Header>
                 <Container size="lg" h="100%">
-                    <Group h="100%" justify="space-between">
+                    <Group h="100%">
                         <Anchor
                             component={Link}
                             to="/employees"

@@ -7,6 +7,7 @@ interface EmployeeViewModalProps {
     employee: Employee | null;
     opened: boolean;
     onClose: () => void;
+    onDelete: (employee: Employee) => void;
 }
 
 interface DetailRowProps {
@@ -22,7 +23,7 @@ const DetailRow = ({ label, value }: DetailRowProps) => (
     </div>
 );
 
-const EmployeeViewModal = ({ employee, opened, onClose }: EmployeeViewModalProps) => (
+const EmployeeViewModal = ({ employee, opened, onClose, onDelete }: EmployeeViewModalProps) => (
     <Modal
         opened={opened}
         onClose={onClose}
@@ -64,6 +65,9 @@ const EmployeeViewModal = ({ employee, opened, onClose }: EmployeeViewModalProps
 
                 {/* Navigating unmounts the list page, which closes the modal */}
                 <Group justify="flex-end">
+                    <Button variant="light" color="red" onClick={() => onDelete(employee)}>
+                        Delete
+                    </Button>
                     <Button component={Link} to={`/employees/${employee.id}/edit`}>Edit</Button>
                 </Group>
             </Stack>

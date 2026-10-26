@@ -14,4 +14,5 @@ public interface EmployeeService {
     PhotoResponse getPhoto(UUID id);
     EmployeeResponse findById(UUID id);
     EmployeeResponse update(UUID id, EmployeeRequest request, MultipartFile photo, boolean removePhoto);
+    void delete(UUID id);
 }

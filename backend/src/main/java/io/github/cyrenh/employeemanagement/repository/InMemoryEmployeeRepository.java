@@ -18,9 +18,8 @@ public class InMemoryEmployeeRepository implements EmployeeRepository {
     private final Map<UUID, Employee> store = new ConcurrentHashMap<>();
 
     @Override
-    public Employee save(Employee employee) {
+    public void save(Employee employee) {
         store.put(employee.getId(), employee);
-        return employee;
     }
 
     @Override
@@ -43,6 +42,11 @@ public class InMemoryEmployeeRepository implements EmployeeRepository {
     public boolean existsByEmailAndIdNot(String email, UUID id) {
         return store.values().stream()
                 .anyMatch(e -> !e.getId().equals(id) && e.getEmail().equalsIgnoreCase(email));
+    }
+
+    @Override
+    public boolean deleteById(UUID id) {
+        return store.remove(id) != null;
     }
 
 }

@@ -71,6 +71,13 @@ class EmployeeApi {
         return data;
     };
 
+    remove = async (id: string): Promise<void> => {
+
+        const response = await apiClient.delete<void, ProblemBody>(`${this.baseUrl}/${id}`);
+
+        if (!response.ok) throw toApiError(response);
+    };
+
 }
 
 export const employeeApi = new EmployeeApi();
